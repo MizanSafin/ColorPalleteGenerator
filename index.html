@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS clip</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Courier New", Courier, monospace;
+      }
+      .shape {
+        width: 180px;
+        height: 150px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        border: 1px solid red;
+        font-size: 12px;
+      }
+      .innerShape {
+        color: #fefefe;
+        background-color: #191818;
+        filter: opacity(0.6);
+        padding: 5px;
+      }
+      .colors {
+        width: 100%;
+        max-width: 500px;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      :root {
+        --color1: rgb(10, 139, 118);
+      }
+      .colors > :nth-of-type(1) {
+        flex-basis: 16%;
+        height: 100%;
+        background: color-mix(in oklab, var(--color1) 10%, white);
+      }
+      .colors > :nth-of-type(2) {
+        flex-basis: 16%;
+        height: 100%;
+        background: color-mix(in oklab, var(--color1) 30%, white);
+      }
+      .colors > :nth-of-type(3) {
+        flex-basis: 16%;
+        height: 100%;
+        background: color-mix(in oklab, var(--color1) 70%, white);
+      }
+      .colors > :nth-of-type(4) {
+        flex-basis: 16%;
+        height: 100%;
+        background: color-mix(in oklab, var(--color1) 70%, black);
+      }
+      .colors > :nth-of-type(5) {
+        flex-basis: 16%;
+        height: 100%;
+        background: color-mix(in oklab, var(--color1) 50%, black);
+      }
+      .colors > :nth-of-type(6) {
+        flex-basis: 16%;
+        height: 100%;
+        background: color-mix(in oklab, var(--color1) 30%, black);
+      }
+      .btns {
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      .btns button {
+        display: block;
+        padding: 5px 10px;
+        margin-bottom: 5px;
+        background-color: rgb(7, 7, 95);
+        border-radius: 3px;
+        cursor: pointer;
+        border: none;
+        font-size: 12px;
+        color: rgb(241, 248, 246);
+        transition: all 0.3s ease;
+      }
+      .btns button:hover {
+        transform: scale(1.1);
+      }
+      .mrq {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background-color: #060606;
+        color: beige;
+      }
+      .mrq marquee {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mrq">
+      <marquee behavior="smooth" direction="left" scrollAmount="" 5
+        >I am Mizanur rahman .I am web developer .This is color pallete
+        generator by me .You can copy color code and use as a
+        background-color</marquee
+      >
+    </div>
+    <div class="shape">
+      <div class="innerShape"></div>
+    </div>
+    <div class="btns">
+      <button class="red">Red</button>
+      <button class="green">Green</button>
+      <button class="random">Random</button>
+    </div>
+    <div class="colors">
+      <div class="1"></div>
+      <div class="2"></div>
+      <div class="3 three"></div>
+      <div class="4"></div>
+      <div class="5"></div>
+      <div class="6"></div>
+    </div>
+    <script>
+      let colorsEl = document.querySelector(".colors");
+      let shapeEl = document.querySelector(".shape");
+      let innerShapeEl = document.querySelector(".innerShape");
+      let redEl = document.querySelector(".red");
+      let greenEl = document.querySelector(".green");
+      let randomEl = document.querySelector(".random");
+      redEl.addEventListener("click", () => {
+        document.documentElement.style.setProperty("--color1", "#cc0000");
+      });
+      greenEl.addEventListener("click", () => {
+        document.documentElement.style.setProperty("--color1", "#00cc00");
+      });
+
+      function getColor() {
+        let color = "#";
+        let colorcode = [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          0,
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+        ];
+        for (let i = 0; i < 6; i++) {
+          let randomNum = Math.floor(Math.random() * colorcode.length);
+          color += colorcode[randomNum];
+        }
+        return color;
+      }
+      randomEl.addEventListener("click", () => {
+        document.documentElement.style.setProperty("--color1", getColor());
+      });
+      console.log(getColor());
+      colorsEl.addEventListener("click", (e) => {
+        let targetedDiv = e.target;
+        let color = window.getComputedStyle(targetedDiv).backgroundColor;
+
+        shapeEl.style.backgroundColor = color;
+        innerShapeEl.innerHTML = `Copy this color code and use as background color in css : ${color}`;
+        console.log(color);
+      });
+    </script>
+  </body>
+</html>
